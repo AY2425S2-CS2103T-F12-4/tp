@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -102,6 +104,32 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public ObservableList<Person> asUnmodifiableObservableList() {
         return internalUnmodifiableList;
+    }
+
+    public void sortByUpcomingBirthday() {
+        FXCollections.sort(internalList, Comparator
+                .comparing(
+                        (Person p) -> getNextBirthday(p.getBirthday()),
+                        Comparator.nullsLast(Comparator.naturalOrder())
+                ));
+    }
+
+    public LocalDate getNextBirthday(LocalDate birthday) {
+        if (birthday == null) {
+            return null;
+        }
+
+        LocalDate today = LocalDate.now();
+
+        // Set birthday to this year
+        LocalDate nextBirthday = birthday.withYear(today.getYear());
+
+        // If it has already passed this year, adjust to next year
+        if (nextBirthday.isBefore(today) || nextBirthday.isEqual(today)) {
+            nextBirthday = nextBirthday.plusYears(1);
+        }
+
+        return nextBirthday;
     }
 
     @Override

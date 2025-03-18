@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import lombok.Builder;
 import lombok.Data;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.anniversary.Anniversary;
+import seedu.address.model.anniversary.Birthday;
 import seedu.address.model.tag.Tag;
 
 
@@ -85,6 +87,14 @@ public class Person {
 
     }
 
+    public LocalDate getBirthday() {
+        return anniversaries.stream()
+                .filter(a -> a.getType().stream().anyMatch(type -> type instanceof Birthday))
+                .map(Anniversary::getDate)
+                .findFirst()
+                .orElse(null);
+    }
+
     /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
@@ -126,5 +136,4 @@ public class Person {
                 .add("tags", tags)
                 .toString();
     }
-
 }

@@ -87,6 +87,14 @@ public class Person {
 
     }
 
+    /**
+     * Returns the birthday of the person if available.
+     *
+     * The method checks the list of anniversaries and returns the date of the first
+     * {@link Birthday} type anniversary. If there is no birthday recorded, it returns {@code null}.
+     *
+     * @return The date of the person's birthday if available, or {@code null} if not recorded.
+     */
     public LocalDate getBirthday() {
         return anniversaries.stream()
                 .filter(a -> a.getType().stream().anyMatch(type -> type instanceof Birthday))

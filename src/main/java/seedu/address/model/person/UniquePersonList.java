@@ -106,6 +106,11 @@ public class UniquePersonList implements Iterable<Person> {
         return internalUnmodifiableList;
     }
 
+    /**
+     * Sorts the internal list of persons by their upcoming birthday.
+     * - Persons with the nearest upcoming birthday will appear first.
+     * - Persons without a birthday (null) will be placed at the end of the list.
+     */
     public void sortByUpcomingBirthday() {
         FXCollections.sort(internalList, Comparator
                 .comparing(
@@ -114,6 +119,16 @@ public class UniquePersonList implements Iterable<Person> {
                 ));
     }
 
+    /**
+     * Returns the next upcoming birthday based on the current date.
+     *
+     * If the birthday has already occurred this year, the next occurrence will be set to the following year.
+     * If the birthday is {@code null}, {@code null} will be returned.
+     *
+     * @param birthday The original birthday of the person.
+     * @return The next occurrence of the birthday, adjusted to the current or next year,
+     *         or {@code null} if the birthday is not set.
+     */
     public LocalDate getNextBirthday(LocalDate birthday) {
         if (birthday == null) {
             return null;

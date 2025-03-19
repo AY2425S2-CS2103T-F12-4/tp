@@ -4,10 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -48,6 +52,9 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(toAdd);
+
+        //Ensure sorting happens after adding
+        sortByUpcomingBirthday();
     }
 
     /**
@@ -68,6 +75,8 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.set(index, editedPerson);
+
+        sortByUpcomingBirthday();
     }
 
     /**
@@ -84,6 +93,8 @@ public class UniquePersonList implements Iterable<Person> {
     public void setPersons(UniquePersonList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
+
+        sortByUpcomingBirthday();
     }
 
     /**
@@ -97,6 +108,8 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.setAll(persons);
+
+        sortByUpcomingBirthday();
     }
 
     /**
@@ -107,44 +120,48 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Sorts the internal list of persons by their upcoming birthday.
+     * Sorts the list of persons by their next upcoming birthday.
      * - Persons with the nearest upcoming birthday will appear first.
-     * - Persons without a birthday (null) will be placed at the end of the list.
+     * - Persons without a birthday will be placed at the end of the list.
      */
     public void sortByUpcomingBirthday() {
-        FXCollections.sort(internalList, Comparator
-                .comparing(
-                        (Person p) -> getNextBirthday(p.getBirthday()),
-                        Comparator.nullsLast(Comparator.naturalOrder())
-                ));
+        List<Person> sortedList = internalList.stream()
+                .sorted(Comparator
+                        .comparing(
+                                (Person p) -> daysUntilNextBirthday(p.getBirthday()),
+                                Comparator.nullsLast(Comparator.naturalOrder())
+                        ))
+                .collect(Collectors.toList());
+
+        Platform.runLater(() -> {
+            internalList.setAll(sortedList);
+        });
     }
 
     /**
-     * Returns the next upcoming birthday based on the current date.
+     * Returns the number of days until the next occurrence of the specified birthday.
      *
-     * If the birthday has already occurred this year, the next occurrence will be set to the following year.
-     * If the birthday is {@code null}, {@code null} will be returned.
+     * <p>If the birthday has already passed this year, it will be adjusted to the next year.
+     * If the birthday is {@code null}, the value {@link Integer#MAX_VALUE} is returned to
+     * ensure that persons without birthdays are placed at the end of the list.</p>
      *
      * @param birthday The original birthday of the person.
-     * @return The next occurrence of the birthday, adjusted to the current or next year,
-     *         or {@code null} if the birthday is not set.
+     * @return The number of days until the next birthday, or {@link Integer#MAX_VALUE} if the birthday is not set.
      */
-    public LocalDate getNextBirthday(LocalDate birthday) {
+    private int daysUntilNextBirthday(LocalDate birthday) {
         if (birthday == null) {
-            return null;
+            return Integer.MAX_VALUE;
         }
 
         LocalDate today = LocalDate.now();
-
-        // Set birthday to this year
         LocalDate nextBirthday = birthday.withYear(today.getYear());
 
-        // If it has already passed this year, adjust to next year
         if (nextBirthday.isBefore(today) || nextBirthday.isEqual(today)) {
             nextBirthday = nextBirthday.plusYears(1);
         }
 
-        return nextBirthday;
+        int days = (int) ChronoUnit.DAYS.between(today, nextBirthday);
+        return days;
     }
 
     @Override

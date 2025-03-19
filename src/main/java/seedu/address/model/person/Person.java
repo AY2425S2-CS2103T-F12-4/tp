@@ -54,6 +54,7 @@ public class Person {
         this.tags = new HashSet<>(tags);
         this.tags.addAll(tags);
         this.anniversaries = new ArrayList<>(anniversaries);
+
     }
 
     /**
@@ -97,12 +98,12 @@ public class Person {
      */
     public LocalDate getBirthday() {
         return anniversaries.stream()
-                .filter(a -> a.getType().stream().anyMatch(type -> type instanceof Birthday))
+                .filter(a -> a.getType().stream()
+                        .anyMatch(type -> "Birthday".equals(type.getName())))
                 .map(Anniversary::getDate)
                 .findFirst()
                 .orElse(null);
     }
-
     /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
@@ -143,5 +144,10 @@ public class Person {
                 .add("address", address)
                 .add("tags", tags)
                 .toString();
+    }
+
+    //TO BE REMOVED
+    public Name getName() {
+        return name;
     }
 }

@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -33,7 +34,14 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
+
+        this.addressBook.sortByUpcomingBirthday();
+
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+
+        Platform.runLater(() -> {
+            filteredPersons.setPredicate(person -> true);
+        });
     }
 
     public ModelManager() {

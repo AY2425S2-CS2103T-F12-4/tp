@@ -114,6 +114,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asUnmodifiableObservableList();
     }
 
+    /**
+     * Sorts the persons list by the next upcoming birthday.
+     */
+    public void sortByUpcomingBirthday() {
+        persons.sortByUpcomingBirthday(); // Delegates to UniquePersonList
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

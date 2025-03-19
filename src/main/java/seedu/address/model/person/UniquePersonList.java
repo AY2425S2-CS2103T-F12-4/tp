@@ -5,7 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -126,11 +125,10 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void sortByUpcomingBirthday() {
         List<Person> sortedList = internalList.stream()
-                .sorted(Comparator
-                        .comparing(
-                                (Person p) -> daysUntilNextBirthday(p.getBirthday()),
-                                Comparator.nullsLast(Comparator.naturalOrder())
-                        ))
+                .sorted(Comparator.comparing(
+                        (Person p) -> daysUntilNextBirthday(p.getBirthday()),
+                        Comparator.nullsLast(Comparator.naturalOrder())
+                ))
                 .collect(Collectors.toList());
 
         Platform.runLater(() -> {

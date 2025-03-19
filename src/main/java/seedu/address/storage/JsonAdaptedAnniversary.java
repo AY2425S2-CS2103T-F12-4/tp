@@ -1,6 +1,8 @@
 package seedu.address.storage;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -15,6 +17,7 @@ import seedu.address.model.anniversary.Anniversary;
 @Data
 public class JsonAdaptedAnniversary {
     private final LocalDate date;
+    @JsonProperty("type")
     private final Set<JsonAdaptedAnniversaryType> types;
     private final String description;
     private final String name;
@@ -28,11 +31,12 @@ public class JsonAdaptedAnniversary {
      */
     @JsonCreator
     public JsonAdaptedAnniversary(@JsonProperty("date") LocalDate date,
-                                  @JsonProperty("types") Set<JsonAdaptedAnniversaryType> types,
+                                  @JsonProperty("type") List<JsonAdaptedAnniversaryType> types,
                                   @JsonProperty("description") String description,
                                   @JsonProperty("name") String name) {
         this.date = date;
-        this.types = types;
+        this.types = (types != null) ? new HashSet<>(types) : new HashSet<>();
+
         this.description = description;
         this.name = name;
     }

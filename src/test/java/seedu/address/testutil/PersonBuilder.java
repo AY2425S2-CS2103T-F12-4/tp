@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 import lombok.Builder;
 import seedu.address.model.anniversary.Anniversary;
+import seedu.address.model.anniversary.Birthday;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -107,6 +109,21 @@ public class PersonBuilder {
      */
     public PersonBuilder withEmployeeId(String employeeId) {
         this.employeeId = UUID.fromString(employeeId);
+        return this;
+    }
+
+    /**
+     * Sets the birthday of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBirthday(LocalDate birthday) {
+        if (birthday != null) {
+            this.anniversaries.add(new Anniversary(
+                    birthday,
+                    Set.of(new Birthday()), // ✅ Create Birthday instance
+                    "Birthday",
+                    "Birthday"
+            ));
+        }
         return this;
     }
 

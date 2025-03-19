@@ -125,8 +125,8 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void sortByUpcomingBirthday() {
         List<Person> sortedList = internalList.stream()
-                .sorted(Comparator.comparing(
-                        (Person p) -> daysUntilNextBirthday(p.getBirthday()),
+                .sorted(Comparator
+                        .comparing((Person p) -> daysUntilNextBirthday(p.getBirthday()),
                         Comparator.nullsLast(Comparator.naturalOrder())
                 ))
                 .collect(Collectors.toList());

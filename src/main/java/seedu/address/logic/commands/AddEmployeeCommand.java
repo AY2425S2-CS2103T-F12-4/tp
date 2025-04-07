@@ -64,13 +64,11 @@ public class AddEmployeeCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        // Save the state before any potential changes
-        model.commitChanges();
-
         if (model.hasEmployee(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEE);
         }
 
+        model.commitChanges();
         boolean isAnyAnniAfterToday = toAdd.getAnniversaries().stream()
                 .anyMatch(anniversary -> anniversary.getDate().isAfter(LocalDate.now()));
 

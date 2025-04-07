@@ -28,7 +28,7 @@ public class EmployeeIdPrefixValidationUtils {
             EmployeeId id1 = employees.get(i).getEmployeeId();
             for (int j = i + 1; j < employees.size(); j++) {
                 EmployeeId id2 = employees.get(j).getEmployeeId();
-                if (id1.hasPrefixConflict(id2)) {
+                if (id1.equals(id2)) {
                     conflicts.add(new Pair<>(id1, id2));
                 }
             }

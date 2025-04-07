@@ -16,7 +16,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.anniversary.Anniversary;
 import seedu.address.model.person.Employee;
-import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdQuery;
 
 /**
  * Deletes Anniversaries from a employee
@@ -32,14 +32,14 @@ public class DeleteAnniversaryCommand extends Command {
             + PREFIX_EMPLOYEEID + "EMPLOYEE_ID "
             + PREFIX_ANNIVERSARY_INDEX + "index ";
     private final Index targetIndex;
-    private final EmployeeId employeeIdPrefix;
+    private final EmployeeIdQuery employeeIdPrefix;
 
     /**
      * constructs a deleteAnniversaryCommand
      * @param targetIndex tar
      * @param employeeIdPrefix emp
      */
-    public DeleteAnniversaryCommand(Index targetIndex, EmployeeId employeeIdPrefix) {
+    public DeleteAnniversaryCommand(Index targetIndex, EmployeeIdQuery employeeIdPrefix) {
         this.targetIndex = targetIndex;
         this.employeeIdPrefix = employeeIdPrefix;
     }

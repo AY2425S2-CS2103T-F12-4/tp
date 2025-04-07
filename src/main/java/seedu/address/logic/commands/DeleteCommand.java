@@ -9,7 +9,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Employee;
-import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdQuery;
 
 /**
  * Deletes an employee identified using it's displayed index from the address book.
@@ -26,9 +26,9 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_EMPLOYEE_SUCCESS = "Deleted Employee: %1$s";
 
-    private final EmployeeId employeeIdPrefix;
+    private final EmployeeIdQuery employeeIdPrefix;
 
-    public DeleteCommand(EmployeeId employeeIdPrefix) {
+    public DeleteCommand(EmployeeIdQuery employeeIdPrefix) {
         this.employeeIdPrefix = employeeIdPrefix;
     }
 

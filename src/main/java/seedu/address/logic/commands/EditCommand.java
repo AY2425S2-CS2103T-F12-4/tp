@@ -25,6 +25,7 @@ import seedu.address.model.anniversary.Anniversary;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Employee;
 import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdQuery;
 import seedu.address.model.person.JobPosition;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -53,17 +54,15 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_EMPLOYEE_SUCCESS = "Edited Employee: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_EMPLOYEE_ID_CONFLICT = "The new employee ID is either a prefix of another "
-            + "existing employee ID or another existing employee ID is a prefix of this one";
-
-    private final EmployeeId employeeIdPrefix;
+    public static final String MESSAGE_DUPLICATE_EMPLOYEE = "The new employee ID is a duplicate of another employee ID";
+    private final EmployeeIdQuery employeeIdPrefix;
     private final EditEmployeeDescriptor editEmployeeDescriptor;
 
     /**
      * @param employeeIdPrefix of the employee in the filtered employee list to edit
      * @param editEmployeeDescriptor details to edit the employee with
      */
-    public EditCommand(EmployeeId employeeIdPrefix, EditEmployeeDescriptor editEmployeeDescriptor) {
+    public EditCommand(EmployeeIdQuery employeeIdPrefix, EditEmployeeDescriptor editEmployeeDescriptor) {
         requireNonNull(employeeIdPrefix);
         requireNonNull(editEmployeeDescriptor);
 
@@ -97,9 +96,8 @@ public class EditCommand extends Command {
 
         Employee editedEmployee = createEditedEmployee(employeeToEdit, editEmployeeDescriptor);
 
-        if (model.hasEmployeeIdPrefixConflictIgnoringSpecific(editedEmployee.getEmployeeId(),
-                employeeToEdit.getEmployeeId())) {
-            throw new CommandException(MESSAGE_EMPLOYEE_ID_CONFLICT);
+        if (!employeeToEdit.isSameEmployee(editedEmployee) && model.hasDuplicateEmployeeDetails(editedEmployee)) {
+            throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEE);
         }
 
         model.setEmployee(employeeToEdit, editedEmployee);

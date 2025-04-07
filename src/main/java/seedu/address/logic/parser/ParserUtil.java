@@ -15,6 +15,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdQuery;
 import seedu.address.model.person.JobPosition;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -67,16 +68,16 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code employeeIdPrefix} is empty or contains spaces.
      */
-    public static EmployeeId parseEmployeeIdPrefix(String employeeIdPrefix) throws ParseException {
+    public static EmployeeIdQuery parseEmployeeIdQuery(String employeeIdPrefix) throws ParseException {
         requireNonNull(employeeIdPrefix);
         if (employeeIdPrefix.isEmpty()) {
             throw new ParseException(MESSAGE_EMPLOYEE_ID_PREFIX_NOT_SPECIFIED);
         }
         employeeIdPrefix = employeeIdPrefix.trim();
-        if (!EmployeeId.isValidEmployeeId(employeeIdPrefix)) {
+        if (!EmployeeIdQuery.isValidEmployeeIdQuery(employeeIdPrefix)) {
             throw new ParseException(EmployeeId.MESSAGE_PREFIX_CONSTRAINTS);
         }
-        return EmployeeId.fromString(employeeIdPrefix);
+        return EmployeeIdQuery.fromString(employeeIdPrefix);
     }
 
     /**

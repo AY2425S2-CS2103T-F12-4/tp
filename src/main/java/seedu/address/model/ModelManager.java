@@ -19,7 +19,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.anniversary.Anniversary;
 import seedu.address.model.person.Employee;
-import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdQuery;
 import seedu.address.model.reminder.Reminder;
 
 /**
@@ -211,18 +211,6 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean hasEmployeeIdPrefixConflict(EmployeeId employeeId) {
-        requireNonNull(employeeId);
-        return addressBook.hasEmployeeIdPrefixConflict(employeeId);
-    }
-
-    @Override
-    public boolean hasEmployeeIdPrefixConflictIgnoringSpecific(EmployeeId employeeId, EmployeeId toIgnore) {
-        requireAllNonNull(employeeId, toIgnore);
-        return addressBook.hasEmployeeIdPrefixConflictIgnoringSpecific(employeeId, toIgnore);
-    }
-
-    @Override
     public boolean hasDuplicateEmployeeDetails(Employee employee) {
         requireNonNull(employee);
         return addressBook.hasDuplicatePersonDetails(employee);
@@ -260,19 +248,19 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public ObservableList<Employee> getFilteredByEmployeeIdPrefixListFromObservable(EmployeeId employeeIdPrefix) {
-        requireNonNull(employeeIdPrefix);
+    public ObservableList<Employee> getFilteredByEmployeeIdPrefixListFromObservable(EmployeeIdQuery employeeIdQuery) {
+        requireNonNull(employeeIdQuery);
         return new FilteredList<>(
-                filteredEmployees, employee -> employeeIdPrefix.isPrefixOf(employee.getEmployeeId())
+                filteredEmployees, employee -> employeeIdQuery.isPrefixOf(employee.getEmployeeId())
         );
     }
 
     @Override
-    public ObservableList<Employee> getFullFilteredByEmployeeIdPrefixListFromData(EmployeeId employeeIdPrefix) {
-        requireNonNull(employeeIdPrefix);
+    public ObservableList<Employee> getFullFilteredByEmployeeIdPrefixListFromData(EmployeeIdQuery employeeIdQuery) {
+        requireNonNull(employeeIdQuery);
         return new FilteredList<>(
                 addressBook.getEmployeeList(),
-                employee -> employeeIdPrefix.isPrefixOf(employee.getEmployeeId())
+                employee -> employeeIdQuery.isPrefixOf(employee.getEmployeeId())
         );
     }
 

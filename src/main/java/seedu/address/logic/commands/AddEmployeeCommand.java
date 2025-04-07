@@ -49,8 +49,6 @@ public class AddEmployeeCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New employee added: %1$s";
     public static final String MESSAGE_DUPLICATE_EMPLOYEE = "This employee already exists in the address book";
-    public static final String MESSAGE_EMPLOYEE_ID_CONFLICT = "This employee ID is either a prefix of another "
-            + "existing employee ID or another existing employee ID is a prefix of this one";
 
     private final Employee toAdd;
 
@@ -71,10 +69,6 @@ public class AddEmployeeCommand extends Command {
 
         if (model.hasEmployee(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEE);
-        }
-
-        if (model.hasEmployeeIdPrefixConflict(toAdd.getEmployeeId())) {
-            throw new CommandException(MESSAGE_EMPLOYEE_ID_CONFLICT);
         }
 
         boolean isAnyAnniAfterToday = toAdd.getAnniversaries().stream()

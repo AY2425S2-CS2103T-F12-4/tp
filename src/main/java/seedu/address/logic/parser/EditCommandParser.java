@@ -17,7 +17,7 @@ import java.util.Set;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditEmployeeDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdQuery;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -42,10 +42,10 @@ public class EditCommandParser implements Parser<EditCommand> {
                 PREFIX_TAG
         );
 
-        EmployeeId employeeIdPrefix;
+        EmployeeIdQuery employeeIdPrefix;
 
         try {
-            employeeIdPrefix = ParserUtil.parseEmployeeIdPrefix(argMultimap.getPreamble());
+            employeeIdPrefix = ParserUtil.parseEmployeeIdQuery(argMultimap.getPreamble());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }

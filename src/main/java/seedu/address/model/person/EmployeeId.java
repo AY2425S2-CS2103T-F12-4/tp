@@ -53,24 +53,6 @@ public class EmployeeId {
         return test.matches(VALIDATION_REGEX);
     }
 
-    /**
-     * Checks if this EmployeeId is a prefix of another EmployeeId.
-     *
-     * @param other The EmployeeId to be checked against.
-     * @return true if this EmployeeId is a prefix of the specified EmployeeId, otherwise false.
-     */
-    public boolean isPrefixOf(EmployeeId other) {
-        return other.value.startsWith(this.value);
-    }
-
-    /**
-     * Returns true if the employee ID has a prefix conflict with another employee ID.
-     * A prefix conflict occurs when one employee ID is a prefix of another one.
-     */
-    public boolean hasPrefixConflict(EmployeeId other) {
-        return this.isPrefixOf(other) || other.isPrefixOf(this);
-    }
-
     @Override
     public String toString() {
         return value;

@@ -19,7 +19,7 @@ import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.anniversary.Anniversary;
-import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdQuery;
 
 /**
  * Parses input arguments and creates a new AddAnniversaryCommand object
@@ -42,10 +42,10 @@ public class AddAnniversaryCommandParser implements Parser<AddAnniversaryCommand
             );
         }
         // parse required fields
-        EmployeeId employeeIdPrefix = ParserUtil.parseEmployeeIdPrefix(argMultimap.getValue(PREFIX_EMPLOYEEID).get());
+        EmployeeIdQuery employeeIdQuery = ParserUtil.parseEmployeeIdQuery(argMultimap.getValue(PREFIX_EMPLOYEEID).get());
         try {
             Anniversary anniversary = AnniversaryParserUtils.resolveAnniversaryInput(argMultimap);
-            return new AddAnniversaryCommand(employeeIdPrefix, anniversary);
+            return new AddAnniversaryCommand(employeeIdQuery, anniversary);
         } catch (ParseException pe) {
             throw pe;
         }

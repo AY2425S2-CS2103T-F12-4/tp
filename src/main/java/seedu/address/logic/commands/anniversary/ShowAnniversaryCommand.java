@@ -10,7 +10,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Employee;
-import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdQuery;
 
 /**
  * Shows the list of anniversary of an existing employee with the specified employee ID.
@@ -29,16 +29,16 @@ public class ShowAnniversaryCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Anniversaries shown for employeeId %s";
 
-    private EmployeeId employeeIdToFind;
+    private EmployeeIdQuery employeeIdToFind;
 
     /**
      * Creates an ShowAnniversaryCommand with the given employee ID.
      *
      * @param employeeId the employee ID to find
      */
-    public ShowAnniversaryCommand(EmployeeId employeeId) {
-        requireNonNull(employeeId);
-        this.employeeIdToFind = employeeId;
+    public ShowAnniversaryCommand(EmployeeIdQuery employeeIdQuery) {
+        requireNonNull(employeeIdQuery);
+        this.employeeIdToFind = employeeIdQuery;
     }
 
     @Override

@@ -25,7 +25,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.anniversary.Anniversary;
 import seedu.address.model.person.Employee;
-import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdQuery;
 
 /**
  * Adds an anniversary to an existing Employee in the address book.
@@ -52,12 +52,12 @@ public class AddAnniversaryCommand extends Command {
             + PREFIX_ANNIVERSARY_DESC + "Celebrating 25 years "
             + PREFIX_ANNIVERSARY_TYPE_DESC + "Personal";
     private final Anniversary toAdd;
-    private final EmployeeId employeeIdPrefix;
+    private final EmployeeIdQuery employeeIdPrefix;
 
     /**
      * Creates an AddAnniversaryCommand to add the specified {@code Anniversary} to the employee with given employeeId.
      */
-    public AddAnniversaryCommand(EmployeeId employeeIdPrefix, Anniversary anniversary) {
+    public AddAnniversaryCommand(EmployeeIdQuery employeeIdPrefix, Anniversary anniversary) {
         requireNonNull(employeeIdPrefix);
         requireNonNull(anniversary);
         this.employeeIdPrefix = employeeIdPrefix;
@@ -72,14 +72,14 @@ public class AddAnniversaryCommand extends Command {
         if (matchedEmployees.size() > 1) {
             throw new CommandException(String.format(
                     Messages.MESSAGE_MULTIPLE_EMPLOYEES_FOUND_WITH_PREFIX,
-                    employeeIdPrefix
+                    employeeIdPrefix.toString()
             ));
         }
 
         if (matchedEmployees.isEmpty()) {
             throw new CommandException(String.format(
                     Messages.MESSAGE_EMPLOYEE_PREFIX_NOT_FOUND,
-                    employeeIdPrefix
+                    employeeIdPrefix.toString()
             ));
         }
 

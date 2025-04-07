@@ -28,6 +28,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.Employee;
 import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdQuery;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.util.EmployeeIdPrefixValidationUtils;
 import seedu.address.storage.JsonAdaptedPerson;
@@ -183,19 +184,13 @@ public class ImportCommand extends Command {
         // Now check each aggregated employee against the model.
         for (Employee employeeToImport : aggregatedImported) {
             Employee matchInModel = model.getFullFilteredByEmployeeIdPrefixListFromData(
-                            EmployeeId.fromString(employeeToImport.getEmployeeId().toString()))
+                            EmployeeIdQuery.fromString(employeeToImport.getEmployeeId().toString()))
                     .stream()
                     .filter(p -> p.isSameEmployee(employeeToImport))
                     .findFirst()
                     .orElse(null);
             if (matchInModel == null) {
-                // No matching employee in model
-                if (model.hasEmployeeIdPrefixConflict(employeeToImport.getEmployeeId())) {
-                    // Prefix conflict with existing employee in model.
-                    omittedEmployees.add(employeeToImport);
-                    continue;
-                }
-                // No conflict in prefix – add new record.
+                // No conflict – add new record.
                 model.addEmployee(employeeToImport);
                 importedEmployees.add(employeeToImport);
             } else if (matchInModel.hasSameDetails(employeeToImport)) {

@@ -9,7 +9,7 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdQuery;
 
 /**
  * Parses input arguments and creates a new ShowAnniversaryCommand object
@@ -31,7 +31,7 @@ public class ShowAnniversaryCommandParser implements Parser<ShowAnniversaryComma
             );
         }
 
-        EmployeeId employeeId = ParserUtil.parseEmployeeId(argMultimap.getValue(PREFIX_EMPLOYEEID).get());
-        return new ShowAnniversaryCommand(employeeId);
+        EmployeeIdQuery employeeIdQuery = ParserUtil.parseEmployeeIdQuery(argMultimap.getValue(PREFIX_EMPLOYEEID).get());
+        return new ShowAnniversaryCommand(employeeIdQuery);
     }
 }

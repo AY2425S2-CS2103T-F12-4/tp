@@ -53,7 +53,18 @@ title: H'Reers Developer Guide
 
 ## Acknowledgements
 
-* This project is based on the [AddressBook-Level3 project](https://se-education.org/guides/conventions/java/intermediate.html) created by the [SE-EDU initiative](https://se-education.org). ([UG](https://se-education.org/addressbook-level3/UserGuide.html), [DG](https://se-education.org/addressbook-level3/DeveloperGuide.html), [github](https://github.com/se-edu/addressbook-level3))
+* This project is based on the [AddressBook-Level3 project](https://se-education.org/guides/conventions/java/intermediate.html) created by the [SE-EDU initiative](https://se-education.org). ([UG](https://se-education.org/addressbook-level3/UserGuide.html), [DG](https://se-education.org/addressbook-level3/DeveloperGuide.html), [github](https://github.com/se-edu/addressbook-level3)).
+
+* We would also like to acknowledge the following external tools and libraries used in our project:
+  * Project Lombok – for reducing boilerplate code in our Java classes [[Website](https://projectlombok.org)].
+    
+  * Mockito – for facilitating unit testing through mocking [[Website](https://site.mockito.org)].
+    
+  * GitHub Copilot – for providing code suggestions during development and quality checks in pull requests [[Website](https://github.com/features/copilot)].
+    
+  * ChatGPT by OpenAI – for providing guidance and suggestions during development and documentation writing [[Website](https://openai.com/chatgpt)].
+
+
 
 --------------------------------------------------------------------------------------------------------------------
 
